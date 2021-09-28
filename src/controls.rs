@@ -69,7 +69,7 @@ impl CameraStuff {
 			azimuth += delta.x;
 			elevation += delta.y;
 
-			elevation.clamp( -179f32.to_radians(), 179f32.to_radians()); // make sure we don't look straight down
+			//elevation.clamp( -179f32.to_radians(), 179f32.to_radians()); // make sure we don't look straight down
 
 			self.forward.x = rho * elevation.sin() * azimuth.cos();
 			self.forward.z = rho * elevation.sin() * azimuth.sin();
