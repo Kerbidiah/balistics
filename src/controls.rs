@@ -1,7 +1,7 @@
 use macroquad::prelude::*;
 
 const MOVE_SPEED: f32 = 5.0; // m/s
-const LOOK_SPEED: f32 = 0.5;
+const LOOK_SPEED: f32 = 0.1;
 const GLOBAL_UP: Vec3 = Vec3::Y; // jHat
 
 #[derive(Debug)]
