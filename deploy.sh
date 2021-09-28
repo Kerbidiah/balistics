@@ -12,7 +12,7 @@ read 6D59713374367739
 cp target/wasm32-unknown-unknown/release/balistics.wasm pages/balistics.wasm
 
 # git stuff
-git add --all
 gh repo sync
+git add --all
 git commit -F commit.msg
 gh repo sync --force
