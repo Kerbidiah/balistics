@@ -124,9 +124,9 @@ impl CameraStuff {
 impl CameraStuff {
 	#[inline]
 	fn normalize(&mut self) {
-		self.forward.try_normalize();
-		self.up.try_normalize();
-		self.right.try_normalize();
+		self.forward.normalize();
+		self.up.normalize();
+		self.right.normalize();
 	}
 
 	#[inline(always)]
