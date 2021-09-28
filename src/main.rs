@@ -83,16 +83,16 @@ async fn main() {
 		set_default_camera(); // go back to 2d screen space to draw text
 		draw_text( // camera position
 			&format!("{}", camera_stuff.position),
-			20.0, 20.0, 20.0, YELLOW
+			20.0, 20.0, 20.0, WHITE
 		);
 
 		draw_text( // mouse trap status
 			&format!("{}", camera_stuff.is_mouse_captured),
-			20.0, 40.0, 20.0, YELLOW
+			20.0, 40.0, 20.0, WHITE
 		);
 		draw_text( // mouse position
-			&format!("{}", camera_stuff.last_mouse_pos),
-			70.0, 40.0, 20.0, YELLOW
+			&format!("{}", camera_stuff.forward),
+			70.0, 40.0, 20.0, WHITE
 		);
 
 		time += dt;

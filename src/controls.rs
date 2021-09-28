@@ -62,8 +62,6 @@ impl CameraStuff {
 			self.forward.z = r * azimuth.sin();
 			self.forward.x = r * azimuth.cos();
 
-			// info!("azi: {}", azimuth.to_degrees() - (self.forward.z.atan2(self.forward.x)));
-
 			self.update_all_vecs();
 		}
 
