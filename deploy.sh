@@ -15,4 +15,4 @@ cp target/wasm32-unknown-unknown/release/balistics.wasm pages/balistics.wasm
 git add pages/balistics.wasm
 git commit -F commit.msg
 
-gh repo sync
+gh repo sync --force

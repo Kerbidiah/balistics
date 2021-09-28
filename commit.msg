@@ -1,2 +1,2 @@
-new .wasm 
+commit all & sync 
 - by deploy.sh
