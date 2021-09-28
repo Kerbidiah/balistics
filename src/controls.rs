@@ -76,10 +76,10 @@ impl CameraStuff {
 			self.forward.y = rho * azimuth.cos();
 			
 			self.update_all_vecs();
-			self.normalize();
+			self.forward.normalize();
 		}
 
-		self.last_mouse_pos = m_pos;
+		// self.last_mouse_pos = m_pos;
 	}
 	
 	#[inline]
