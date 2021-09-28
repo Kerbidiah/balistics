@@ -51,18 +51,32 @@ impl CameraStuff {
 		let m_pos = mouse_position_local();
 
 		if self.is_mouse_captured {
+			/*
+			up 		+z -> +y
+			right 	+y -> +z
+			forward -x -> +x // but i think - can be ignored
+			*/
+
 			let look_speed: f32 = LOOK_SPEED * get_frame_time();
 			let delta = (m_pos - self.last_mouse_pos) * look_speed;
 
 			// all angles here are in radians
 			let mut azimuth = self.forward.z.atan2(self.forward.x);
-
-			let r = vec2(self.forward.z, self.forward.x).length();
+			let cyl_radius = vec2(self.forward.z, self.forward.x).length();
+			let rho = self.forward.length();
+			let mut elevation = (self.forward.z/self.forward.length()).acos();
+			
 			azimuth += delta.x;
-			self.forward.z = r * azimuth.sin();
-			self.forward.x = r * azimuth.cos();
+			elevation += delta.y;
 
+			elevation.clamp( -179f32.to_radians(), 179f32.to_radians()); // make sure we don't look straight down
+
+			self.forward.x = rho * elevation.sin() * azimuth.cos();
+			self.forward.z = rho * elevation.sin() * azimuth.sin();
+			self.forward.y = rho * azimuth.cos();
+			
 			self.update_all_vecs();
+			self.normalize();
 		}
 
 		self.last_mouse_pos = m_pos;
