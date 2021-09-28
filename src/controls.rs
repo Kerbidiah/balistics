@@ -76,7 +76,7 @@ impl CameraStuff {
 			self.forward.y = rho * azimuth.cos();
 			
 			self.update_all_vecs();
-			self.forward.normalize();
+			self.forward = self.forward.normalize();
 
 			warn!("{}", self.forward.length());
 		}
@@ -126,9 +126,9 @@ impl CameraStuff {
 impl CameraStuff {
 	#[inline]
 	fn normalize(&mut self) {
-		self.forward.normalize();
-		self.up.normalize();
-		self.right.normalize();
+		self.forward = self.forward.normalize();
+		self.up = self.up.normalize();
+		self.right = self.right.normalize();
 	}
 
 	#[inline(always)]
