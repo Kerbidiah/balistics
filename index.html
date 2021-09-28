@@ -25,11 +25,14 @@
 	<!-- Minified and statically hosted version of https://github.com/not-fl3/macroquad/blob/master/js/mq_js_bundle.js -->
 	<script src="https://not-fl3.github.io/miniquad-samples/mq_js_bundle.js"></script>
 	<script>
-	if(true){ // debug version
-		load("target/wasm32-unknown-unknown/debug/balistics.wasm");
-	} else { // release version
-		load("target/wasm32-unknown-unknown/release/balistics.wasm");
-	}
+		var url_name = window.location.href;
+		if(url_name.includes("github.io")){
+			load("https://github.com/Kerbidiah/balistics/releases/download/v0.1.1/balistics.wasm")
+		} else if(true){ // debug version
+			load("target/wasm32-unknown-unknown/debug/balistics.wasm");
+		} else { // release version
+			load("target/wasm32-unknown-unknown/release/balistics.wasm");
+		}
 	</script>
 </body>
 
