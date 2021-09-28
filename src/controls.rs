@@ -77,6 +77,9 @@ impl CameraStuff {
 			
 			self.update_all_vecs();
 			self.forward.normalize();
+			if self.forward.length_squared() >= 100.0 {
+				self.forward = vec3(1., 0., 0.);
+			}
 		}
 		
 		self.last_mouse_pos = m_pos;
