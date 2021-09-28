@@ -1,7 +1,7 @@
 use macroquad::prelude::*;
 
 const MOVE_SPEED: f32 = 5.0; // m/s
-const LOOK_SPEED: f32 = 50.0;
+const LOOK_SPEED: f32 = 5.0;
 const GLOBAL_UP: Vec3 = Vec3::Y; // jHat
 
 #[derive(Debug)]
@@ -77,9 +77,8 @@ impl CameraStuff {
 			
 			self.update_all_vecs();
 			self.forward.normalize();
-			if self.forward.length_squared() >= 100.0 {
-				self.forward = vec3(1., 0., 0.);
-			}
+
+			warn!("{}", self.forward.length());
 		}
 		
 		self.last_mouse_pos = m_pos;
