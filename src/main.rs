@@ -12,7 +12,7 @@ const RADIUS: f32 = 0.25;
 fn conf() -> Conf {
     Conf {
         window_title: String::from("Balistics"),
-        high_dpi: true,
+        high_dpi: false,
 		sample_count: 4, // anti-alliasing
         ..Default::default()
     }
@@ -65,7 +65,7 @@ async fn main() {
 			break // end program
 		}
 		
-		clear_background(BLACK);
+		clear_background(LIGHTGRAY);
 		
 		// move camera with wasd and qe
 		camera_stuff.mouse_trap();
@@ -75,10 +75,14 @@ async fn main() {
 		// go into 3d and place camera
 		camera_stuff.place();
 		
-		draw_grid(40, 1.0, YELLOW, WHITE);
+		draw_grid(40, 1.0, BLANK, WHITE);
 		draw_sphere_wires(vec3(0., 0., 0.), RADIUS, None, WHITE);
-		draw_sphere(shell_a.pos_macroq(), RADIUS, None, YELLOW);
-		draw_sphere(shell_b.pos_macroq(), RADIUS, None, ORANGE);
+		draw_sphere(shell_a.pos_macroq(), RADIUS, None, BLUE);
+		draw_sphere(shell_b.pos_macroq(), RADIUS, None, YELLOW);
+
+		draw_line_3d(Vec3::ZERO, vec3(1., 0., 0.), RED);
+		draw_line_3d(Vec3::ZERO, vec3(0., 1., 0.), BLUE);
+		draw_line_3d(Vec3::ZERO, vec3(0., 0., 1.), PINK);
 
 		set_default_camera(); // go back to 2d screen space to draw text
 		draw_text( // camera position

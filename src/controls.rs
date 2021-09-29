@@ -1,7 +1,7 @@
 use macroquad::prelude::*;
 
 const MOVE_SPEED: f32 = 5.0; // m/s
-const LOOK_SPEED: f32 = 5.0;
+const LOOK_SPEED: f32 = 0.1;
 const GLOBAL_UP: Vec3 = Vec3::Y; // jHat
 
 #[derive(Debug)]
@@ -28,7 +28,7 @@ impl CameraStuff {
 			forward, // DON'T start w/ camera looking up/down
 			up,
 			right,
-			last_mouse_pos: mouse_position_local(), // ???
+			last_mouse_pos: Vec2::ZERO,
 			is_mouse_captured: false
 		};
 
@@ -48,40 +48,39 @@ impl CameraStuff {
 
 	#[inline]
 	pub fn mouse_look(&mut self) {
-		let m_pos = mouse_position_local();
-
-		if self.is_mouse_captured {
-			/*
-			up 		+z -> +y
-			right 	+y -> +z
-			forward -x -> +x // but i think - can be ignored
-			*/
-
-			let look_speed: f32 = LOOK_SPEED * get_frame_time();
-			let delta = (m_pos - self.last_mouse_pos) * look_speed;
-
-			// all angles here are in radians
-			let mut azimuth = self.forward.z.atan2(self.forward.x);
-			let cyl_radius = vec2(self.forward.z, self.forward.x).length();
-			let rho = self.forward.length();
-			let mut elevation = (self.forward.z/self.forward.length()).acos();
-			
-			azimuth += delta.x;
-			elevation += delta.y;
-
-			//elevation.clamp( -179f32.to_radians(), 179f32.to_radians()); // make sure we don't look straight down
-
-			self.forward.x = rho * elevation.sin() * azimuth.cos();
-			self.forward.z = rho * elevation.sin() * azimuth.sin();
-			self.forward.y = rho * azimuth.cos();
-			
-			self.update_all_vecs();
-			self.forward = self.forward.normalize();
-
-			warn!("{}", self.forward.length());
-		}
 		
+		let m_pos = if self.is_mouse_captured {
+			mouse_position().into()
+		} else {
+			Vec2::ZERO
+		};
+
+		let look_speed: f32 = LOOK_SPEED * get_frame_time();
+		let delta: Vec2 = (m_pos - self.last_mouse_pos) * look_speed;
+
+		// all angles here are in radians
+		// let rho = self.forward.length();
+		// let cyl_radius = vec2(self.forward.z, self.forward.x).length();
+
+		let mut azimuth = self.forward.z.atan2(self.forward.x); //+ std::f32::consts::PI
+		let mut elevation = std::f32::consts::FRAC_PI_2 - self.forward.angle_between(GLOBAL_UP);
+
+		azimuth += delta.x;
+		elevation -= delta.y;
+
+		elevation = elevation.clamp(-179f32.to_radians(), 179f32.to_radians()); // make sure we don't look straight down
+
+		self.forward.x = azimuth.cos() * elevation.cos();
+		self.forward.y = elevation.sin();
+		self.forward.z = azimuth.sin() * elevation.cos();
+		
+		self.forward = self.forward.normalize();
+		self.update_all_vecs();
+
+		// warn!("{}", self.forward.length());
+
 		self.last_mouse_pos = m_pos;
+		
 	}
 	
 	#[inline]
@@ -154,6 +153,9 @@ impl CameraStuff {
 	#[inline(always)]
 	pub fn toggle_mouse(&mut self) {
 		self.is_mouse_captured = !self.is_mouse_captured;
+		if self.is_mouse_captured == false {
+			self.last_mouse_pos = Vec2::ZERO;
+		}
 	}
 
 	//#[inline(always)]
