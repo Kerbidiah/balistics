@@ -18,3 +18,5 @@ impl Drag {
 		vel.normalize_or_zero() * drag_mag // combines direction w/ magnitude 
 	}
 }
+
+// does this work
